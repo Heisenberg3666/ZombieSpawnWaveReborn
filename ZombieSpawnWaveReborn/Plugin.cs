@@ -4,7 +4,7 @@ using ZombieSpawnWaveReborn.Events;
 
 namespace ZombieSpawnWaveReborn
 {
-    internal class Plugin : Plugin<Config>
+    public class Plugin : Plugin<Config>
     {
         private ServerEvents _serverEvents;
         private WarheadEvents _warheadEvents;

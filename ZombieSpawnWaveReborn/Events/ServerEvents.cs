@@ -4,7 +4,7 @@ using ZombieSpawnWaveReborn.API;
 
 namespace ZombieSpawnWaveReborn.Events
 {
-    public class ServerEvents
+    internal class ServerEvents
     {
         private readonly Config _config;
 

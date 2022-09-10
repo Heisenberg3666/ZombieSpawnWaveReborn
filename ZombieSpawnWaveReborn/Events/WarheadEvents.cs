@@ -2,7 +2,7 @@
 
 namespace ZombieSpawnWaveReborn.Events
 {
-    public class WarheadEvents
+    internal class WarheadEvents
     {
         public void RegisterEvents()
         {

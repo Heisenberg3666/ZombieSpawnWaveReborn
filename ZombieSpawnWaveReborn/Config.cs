@@ -1,9 +1,10 @@
 ﻿using Exiled.API.Interfaces;
 using System.ComponentModel;
+using ZombieSpawnWaveReborn.API.Entities;
 
 namespace ZombieSpawnWaveReborn
 {
-    internal class Config : IConfig
+    public class Config : IConfig
     {
         public bool IsEnabled { get; set; } = true;
 
@@ -13,10 +14,14 @@ namespace ZombieSpawnWaveReborn
         [Description("Whether or not all the zombies will spawn at the same location (if false, they will spawn in random Red Rooms across Entrance Zone).")]
         public bool SpawnTogether { get; set; } = true;
 
-        [Description("The message that Cassie will announce on the zombie spawn wave.")]
-        public string CassieMessage { get; set; } = "SCP 0 4 9 2 CONTAINMENT BREACH DETECTED IN ENTRANCE ZONE";
-
-        [Description("The subtitles for the Cassie message.")]
-        public string CassieSubtitles { get; set; } = "SCP-049-2 Containment breach detected in Entrance zone.";
+        [Description("The announcement that will be made when a zombie spawnwave spawns.")]
+        public Announcement Announcement { get; set; } = new Announcement()
+        {
+            Cassie = "SCP 0 4 9 2 CONTAINMENT BREACH DETECTED . IN ENTRANCE . ZONE",
+            Subtitle = "SCP-049-2 containment breach detected in Entrance Zone.",
+            Broadcast = null,
+            Hint = null,
+            DisplayFor = 5
+        };
     }
 }

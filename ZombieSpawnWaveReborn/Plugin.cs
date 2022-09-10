@@ -1,46 +1,55 @@
 ﻿using Exiled.API.Features;
-using Warhead = Exiled.Events.Handlers.Warhead;
-using Server = Exiled.Events.Handlers.Server;
 using System;
+using ZombieSpawnWaveReborn.Events;
 
 namespace ZombieSpawnWaveReborn
 {
     internal class Plugin : Plugin<Config>
     {
+        private ServerEvents _serverEvents;
+        private WarheadEvents _warheadEvents;
+        
         public static Plugin Instance;
-        private EventHandlers _events;
 
-        public override string Name => "ZombieSpawnWaveReborn";
-        public override string Author => "Heisenberg3666";
-        public override Version Version => new Version(1, 0, 0, 0);
-        public override Version RequiredExiledVersion => new Version(5, 1, 3);
+        public override string Name { get; } = "ZombieSpawnWaveReborn";
+        public override string Author { get; } = "Heisenberg3666";
+        public override Version Version { get; } = new Version(1, 0, 0, 0);
+        public override Version RequiredExiledVersion { get; } = new Version(5, 3, 0);
 
         public override void OnEnabled()
         {
-            base.OnEnabled();
             Instance = this;
-            _events = new EventHandlers();
+
+            _serverEvents = new ServerEvents(Config);
+            _warheadEvents = new WarheadEvents();
+            
             RegisterEvents();
+            
+            base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            base.OnDisabled();
             UnregisterEvents();
-            _events = null;
+
+            _warheadEvents = null;
+            _serverEvents = null;
+
             Instance = null;
+            
+            base.OnDisabled();
         }
 
-        public void RegisterEvents()
+        private void RegisterEvents()
         {
-            Warhead.Detonated += _events.OnDetonated;
-            Server.RespawningTeam += _events.OnRespawningTeam;
+            _serverEvents.RegisterEvents();
+            _warheadEvents.RegisterEvents();
         }
 
-        public void UnregisterEvents()
+        private void UnregisterEvents()
         {
-            Warhead.Detonated -= _events.OnDetonated;
-            Server.RespawningTeam -= _events.OnRespawningTeam;
+            _serverEvents.UnregisterEvents();
+            _warheadEvents.UnregisterEvents();
         }
     }
 }
